@@ -1,6 +1,8 @@
 package com.inventory.product_inventory_system;
 
 import java.util.LinkedHashMap;
+import java.io.FileWriter;   // Import the FileWriter class
+import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -14,21 +16,39 @@ public class InventoryOperations {
 	
 	public static void addProduct () {
 		
-		//initialize scanner inputting product name and quantity
-		scanner = new Scanner(System.in);
-		System.out.println("Enter name of product");
-		inputName = scanner.nextLine();
+		try {
+			
+			//initialize scanner inputting product name and quantity
+			scanner = new Scanner(System.in);
+			System.out.println("Enter name of product");
+			inputName = scanner.nextLine();
+			
+			System.out.println("Enter quantity");
+			inputQuantity = scanner.nextInt();
+			
+			
+			Product product = new Product(inputName, inputQuantity);
+			//RegisterProduct
+			FileWriter myWriter = new FileWriter("productRegistered.txt");
+			 String productInfo = product.toString();
+			 myWriter.write(productInfo);
+			 myWriter.close();
+			
+			
+			getProductList().put(id++, product);
+			System.out.println(productList);
+			//scanner.close();
+			
+
+		      System.out.println("Successfully wrote to the file.");
+		      
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			 System.out.println("An error occurred.");
+			e.printStackTrace();
+		}
 		
-		System.out.println("Enter quantity");
-		inputQuantity = scanner.nextInt();
-		
-		
-		Product product = new Product(inputName, inputQuantity);
-		
-		
-		getProductList().put(id++, product);
-		System.out.println(productList);
-		//scanner.close();
+
 	}
 	
 	public static void removeProduct( ) {
@@ -100,9 +120,7 @@ public class InventoryOperations {
 		return productList;
 	}
 
-	public static void setProductList(Map<Integer, Product> productList) {
-		InventoryOperations.productList = productList;
-	}
+
 
 	public static Scanner getScanner() {
 		return scanner; 

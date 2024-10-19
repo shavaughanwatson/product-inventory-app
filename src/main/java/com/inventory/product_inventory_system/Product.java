@@ -8,7 +8,7 @@ public class Product {
 	public Product(String name, int quantity ) {
 		this.name = name;
 		this.quantity = quantity;
-		this.sku = (int) Math.random() * 1000;
+		this.sku = (long) (Math.random() * 1000);
 	}
 	
 

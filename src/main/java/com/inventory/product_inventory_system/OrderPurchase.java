@@ -28,7 +28,8 @@ public class OrderPurchase {
     		System.out.println("Quanity is invalid ");
     	} else {
     		purchasedProduct.setQuantity(purchasedProduct.getQuantity() - userPurchaseInput );
-        	System.out.println("You have selected " + userPurchaseInput + " " + purchasedProduct.getName());
+    		PrintingReports.printingGeneralReports("order-purchase.txt", "You have selected " + userPurchaseInput + " " + purchasedProduct.getName() + "/n" + "Here is the current stock of product: " +  purchasedProduct);
+        	System.out.println();
         	System.out.println("Here is the current stock of product: " +  purchasedProduct);
     	}
     	

@@ -32,5 +32,13 @@ public class User {
 		 this.isLoggedIn = isLoggedIn;
 	}
 	
+	public boolean getIsLoggedIn() {
+		return this.isLoggedIn;
+	}
 	
+	public String toString() {
+		String UserInfo = "Username: " + username + "Password: " + password;
+		return UserInfo;
+	}
+
 }

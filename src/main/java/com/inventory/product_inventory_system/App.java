@@ -1,67 +1,95 @@
 package com.inventory.product_inventory_system;
 
+
 import java.util.Scanner;
 
-public class App
-{
-    public static void main( String[] args ){
-	    
-    	
+public class App {
+	public static void main(String[] args) {
+
+		
 		Scanner scanner = new Scanner(System.in); // have to be within the scope
 		int userInput;
-		System.out.println("Welcome to the Inventory Product Management System!");
-	
+
 		do {
-
-			System.out.println("Homepage!");
+			// Choose Sign Up or Login UP
+			System.out.println("Let's get started! n/ Press any # number to sign up or press 0 to exit ");
 			
-			if (InventoryOperations.getProductList().size() == 0) {
-				System.out.println("No products have been imported yet");
-			} else {
-				System.out.println(InventoryOperations.getProductList());
-			}
-		
-			System.out.println("Select you main menu!");
-			System.out.println("1 = add product");
-			System.out.println("2 = remove product");
-			System.out.println("3 = get product");
-			System.out.println("4 = edit product");
-			System.out.println("5 = purchase products");
-			System.out.println("6 = generate report");
-
 			userInput = scanner.nextInt();
-			scanner.nextLine(); // Consume the newline character
+			// Press 1 to sign up; Press 2 to login
 
-			if (userInput == 1) {
-				 InventoryOperations.addProduct();
+			if (userInput != 0) {// if user input 1 -- sign up function
+				scanner.nextLine(); // Consume the newline character
+				int id = 0;
+				System.out.println("Enter username");
+				String usernameInput = scanner.nextLine();
 
-			} else if (userInput == 2) {
-				 InventoryOperations.removeProduct();
+				System.out.println("Enter password");
+				String passwordInput = scanner.nextLine();
+				User user = new User(usernameInput, passwordInput);
+				System.out.println(user);
+				
+				String userRegisterInfo = user.toString();
+				PrintingReports.printingGeneralReports("user-registered.txt", userRegisterInfo);
+				
+				Authenitcation.getUsers().put(id++, user); // why doesn't 
+				System.out.println(Authenitcation.getUsers());
 
-			} else if (userInput == 3) {
-				InventoryOperations.getProduct();
-		
-			} else if (userInput == 4) {
-				InventoryOperations.editProduct();
-			} else if (userInput == 5) {
-				OrderPurchase.purchaseProduct();
+				user.setisLoggedIn(true);
 
-			} else if (userInput == 6) {
-				PrintingReports.printingGeneralReports();
-				//Report
-				/*
-				for(Product product: productList.values()) {
-					System.out.println("Product Name | Quantity | SKU |\n"+product.getName() + "|" + product.getQuantity() + "|" + product.getSKU() + "|");
-				}
+				while (user.getIsLoggedIn() == true) {
+					System.out.println("Welcome to the Inventory Product Management System!");
+					if (InventoryOperations.getProductList().size() == 0) {
+						System.out.println("No products have been imported yet");
+					} else {
+						System.out.println(InventoryOperations.getProductList());
+					}
+
+					System.out.println("Select you main menu!");
+					System.out.println("1 = add product");
+					System.out.println("2 = remove product");
+					System.out.println("3 = get product");
+					System.out.println("4 = edit product");
+					System.out.println("5 = purchase products");
+					
+					System.out.println("6 = generate report");
+					System.out.println("7 = sign up");
+
+					userInput = scanner.nextInt();
+					scanner.nextLine(); // Consume the newline character
+
+					if (userInput == 1) {
+						InventoryOperations.addProduct();
+
+					} else if (userInput == 2) {
+						InventoryOperations.removeProduct();
+
+					} else if (userInput == 3) {
+						InventoryOperations.getProduct();
+
+					} else if (userInput == 4) {
+						InventoryOperations.editProduct();
+					} else if (userInput == 5) {
+						OrderPurchase.purchaseProduct();
+						
+					} else if (userInput == 6) {
+						PrintingReports.printingGeneralReports("product-data.txt",  InventoryOperations.getProductList().values().toString());
+
+					} else if (userInput == 7) {
+						
+						user.setisLoggedIn(false);
 			
-				System.out.println(productList.values());
-				*/
-			} else  {
-				System.out.println("choose another option");
+
+					} else {
+						System.out.println("Invalid choose another option");
+					}
+				};
+	
+			} else {
+				System.out.println("GoodBye");
 			}
 
-		} while (userInput != 6);
+		} while (userInput != 0); // userLoggedIn == true
 
 		scanner.close();
-    }
+	}
 }
