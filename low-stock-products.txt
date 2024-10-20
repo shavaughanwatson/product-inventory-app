@@ -1,0 +1,1 @@
+[0=Name:lays Quantity:1 Price:5.66 SKU:5748 Sold:22 Revenue:124.52000000000001, 1=Name:doritos Quantity:1 Price:12.66 SKU:4332 Sold:22 Revenue:278.52]

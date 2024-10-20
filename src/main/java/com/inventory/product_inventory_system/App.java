@@ -31,7 +31,7 @@ public class App {
 				String userRegisterInfo = user.toString();
 				PrintingReports.printingGeneralReports("user-registered.txt", userRegisterInfo);
 				
-				Authenitcation.getUsers().put(id++, user); // why doesn't 
+				Authenitcation.getUsers().put(id++, user); // why doesn't it add to current list if static variable 
 				System.out.println(Authenitcation.getUsers());
 
 				user.setisLoggedIn(true);
@@ -72,16 +72,35 @@ public class App {
 						OrderPurchase.purchaseProduct();
 						
 					} else if (userInput == 6) {
-						PrintingReports.printingGeneralReports("product-data.txt",  InventoryOperations.getProductList().values().toString());
-
+						System.out.println("Which report you would like to print out Press 1 for general; Press 2 for low stock");
+						userInput = scanner.nextInt();
+						if(userInput == 1) {
+						PrintingReports.printingGeneralReports("products.txt",  InventoryOperations.getProductList().values().toString());
+						}
+						
+						if(userInput == 2) {
+							PrintingReports.printingLowStockReports();
+						}
+						
 					} else if (userInput == 7) {
+						InventoryOperations.SearchProducts();
+						
+					} else if (userInput == 8) {
+						InventoryOperations.SearchSKU();
+						
+					
+						
+					
+					} else if (userInput == 9) {
 						
 						user.setisLoggedIn(false);
-			
-
+						
+						
 					} else {
 						System.out.println("Invalid choose another option");
 					}
+					
+					
 				};
 	
 			} else {
