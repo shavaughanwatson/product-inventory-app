@@ -1,35 +1,48 @@
 package com.inventory.product_inventory_system;
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class OrderPurchase {
+	
+	//all this will be it's own class
      private static Scanner scanner;
      private static int userInput;
      private static	int indexInput;
+     private static	int userPurchaseInput; 
+     
      private static	double purchasePrice;
      private static	Product purchasedProduct;
-     private static	int userPurchaseInput; 
+     
 		
      
 	public static void  purchaseProduct() {
 		
 		do { 
 		//get access to product in inventory array
-		System.out.println("Choose which item to purchase");
+		System.out.println("------------------" +"\n" + "Product Purchases" +"\n" + "------------------"  + "\n" + "Select the product ID to make a purchase");
+		String table = String.format("%-10s %-15s %-10s %-10s \n", "ID", "Product Name", "Price", "Quantity"  ) +
+                "------------------------------------------------------------------\n";
 		
-		System.out.println(InventoryOperations.getProductList());// make exception if there's no product in list
+		for (Map.Entry<Integer, Product> entry: InventoryOperations.getProductList().entrySet()) {
+			
+			table += String.format("%-10s %-15s %-10s %-10s \n", entry.getValue().getSKU(), entry.getValue().getName(), entry.getValue().getPrice(), entry.getValue().getQuantity());
+			
+		}
+		
+		
+		System.out.println(table);
 		scanner = new Scanner(System.in);
 		
-  
        //user inputs index to select product
+		System.out.println("------------------" +"\n" + "Input Product ID below:");
 		indexInput = scanner.nextInt();
 		
-		
-        System.out.println("How many items you would like to purchase");
         
         //see product selected
          purchasedProduct = InventoryOperations.getProductList().get(indexInput); 
-    	System.out.println(purchasedProduct);
+    	System.out.println("Product Details" +"\n" + "------------------" + "\n" +"Product Name: "+ purchasedProduct.getName() + "\n" + "Price: " + purchasedProduct.getPrice() + "\n" + "Available Quantity: " + purchasedProduct.getQuantity() );
+    	System.out.println("How many items you would like to purchase ?" + "\n" + "------------------" +"\n" + "Input Product Quantity below:");
     	
     	//user inputs quantity taken from product
     	userPurchaseInput = scanner.nextInt(); // make error exception with  input
@@ -40,18 +53,15 @@ public class OrderPurchase {
     		purchasedProduct.setQuantity(purchasedProduct.getQuantity() - userPurchaseInput );
     		purchasePrice = userPurchaseInput * purchasedProduct.getPrice();
     		
-    	
     		purchasedProduct.setSold(purchasedProduct.getSold() + userPurchaseInput);
     		
     		purchasedProduct.setRevenue(purchasedProduct.getRevenue() + purchasePrice);
     		
-    		System.out.println("You have purchasesd " + userPurchaseInput + " "+  purchasedProduct.getName() + " worth " +  purchasePrice + " Here is the current stock of product:" +  purchasedProduct);
-    		PrintingReports.printingGeneralReports("order-purchase.txt", "You have purchasesd " + userPurchaseInput + "  " + purchasedProduct.getName() + "worth" +  purchasePrice + "Here is the current stock of product: " +  purchasedProduct);
-        	System.out.println();
-        	System.out.println("Here is the current stock of product: " +  purchasedProduct);
+    		System.out.println("Purchase successful" +"\n" + "------------------" + "\n"+ "Updated Inventory" +"\n" +"Product Name: "+ purchasedProduct.getName() + "\n" + "Price: " + purchasedProduct.getPrice() + "\n" + "Available Quantity: " + purchasedProduct.getQuantity() );
+    	
     	}
     	
-		System.out.println("Press one to select a another product or press another key to exit");
+		System.out.println("Press 1 to select a another product or press another key to exit");
 		userInput = scanner.nextInt();
 		} while (userInput == 1);{ //&& product inventory list ==0
 			

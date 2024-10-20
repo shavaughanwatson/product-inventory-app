@@ -1,1 +1,7 @@
-[Name:doritos Quantity:1 SKU:405, Name:lays Quantity:23 SKU:916]
+Product Registration 
+------------------
+Product SKU: 7197
+Product Name: lays
+Price: 12.33
+Quantity: 23
+Product registered succesfully!

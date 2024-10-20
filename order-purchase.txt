@@ -1,1 +1,0 @@
-You have purchasesd 12  1worth255.95999999999998Here is the current stock of product: Name:1 Quantity:11 Price:21.33 SKU:6759 Sold:12 Revenue:255.95999999999998

@@ -4,16 +4,19 @@ public class Product {
 	private String name;
 	private int quantity;
 	private double price;
-	private long sku;
+	private int sku;
 	private int sold;
 	private double revenue;
 	
 	
+	
 	public Product(String name, int quantity, double price ) {
+		//need id property
+		
 		this.name = name;
 		this.quantity = quantity;
 		this.setPrice(price);
-		this.sku = (long) (Math.random() * 10000);
+		this.sku = (int) (Math.random() * 10000);
 		this.sold = 0;
 		this.revenue = sold * price;
 	}
@@ -27,7 +30,7 @@ public class Product {
 		return this.quantity;
 	}
 	
-	public long getSKU() {
+	public int getSKU() {
 		return this.sku;
 	}
 	
@@ -49,7 +52,7 @@ public class Product {
 	}
 	
 	public String toString() {
-		String productInfo = "Name:" + name + " Quantity:" + quantity + " Price:" + price + " SKU:" + sku + " Sold:" + sold + " Revenue:" + revenue;
+		String productInfo = "Name:" + name + " Quantity:" + quantity +  " Price:" + price +  " Sold:" + sold +  " Revenue:" + revenue;
 		return productInfo;
 	}
 
@@ -73,6 +76,12 @@ public class Product {
 	public void setRevenue(double revenue) {
 		this.revenue = revenue;
 	}
+
+
+	
+
+
+	
 
 
 

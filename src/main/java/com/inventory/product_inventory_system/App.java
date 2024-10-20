@@ -1,14 +1,15 @@
 package com.inventory.product_inventory_system;
 
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class App {
 	public static void main(String[] args) {
 
-		
-		Scanner scanner = new Scanner(System.in); // have to be within the scope
-		int userInput;
+		//Scanner and userInput should be class OR interface -- need more research on both
+		Scanner scanner = new Scanner(System.in); //have to be within the scope
+		int userInput; //
 
 		do {
 			// Choose Sign Up or Login UP
@@ -19,6 +20,8 @@ public class App {
 
 			if (userInput != 0) {// if user input 1 -- sign up function
 				scanner.nextLine(); // Consume the newline character
+				
+				////Login should be in Authentication Class- should it be class or interface
 				int id = 0;
 				System.out.println("Enter username");
 				String usernameInput = scanner.nextLine();
@@ -29,28 +32,40 @@ public class App {
 				System.out.println(user);
 				
 				String userRegisterInfo = user.toString();
-				PrintingReports.printingGeneralReports("user-registered.txt", userRegisterInfo);
+				
 				
 				Authenitcation.getUsers().put(id++, user); // why doesn't it add to current list if static variable 
 				System.out.println(Authenitcation.getUsers());
 
 				user.setisLoggedIn(true);
 
-				while (user.getIsLoggedIn() == true) {
+				
+				while (user.getIsLoggedIn() == true) { //user has to be outside the scope
 					System.out.println("Welcome to the Inventory Product Management System!");
 					if (InventoryOperations.getProductList().size() == 0) {
-						System.out.println("No products have been imported yet");
+						System.out.println( "------------------------------------------------------------------\n"+"No products have been imported yet\n" +  "------------------------------------------------------------------\n");
 					} else {
-						System.out.println(InventoryOperations.getProductList());
+						
+						String table = String.format("%-10s %-15s %-10s %-10s %-10s %-10s\n", "SKU", "Product Name", "Price", "Quantity", "Sold", "Revenue") +
+			                    "------------------------------------------------------------------\n";
+						
+						for (Map.Entry<Integer, Product> entry: InventoryOperations.getProductList().entrySet()) {
+							
+							table += String.format("%-10s %-15s %-10s %-10s %-10s %-10s\n", entry.getValue().getSKU(), entry.getValue().getName(), entry.getValue().getPrice(), entry.getValue().getQuantity(),entry.getValue().getSold(),entry.getValue().getRevenue());
+							
+						}
+						
+						System.out.println(table);
+					      
 					}
-
+					
+					//menu should be switched to switch statment inside it's own function
 					System.out.println("Select you main menu!");
 					System.out.println("1 = add product");
 					System.out.println("2 = remove product");
 					System.out.println("3 = get product");
 					System.out.println("4 = edit product");
 					System.out.println("5 = purchase products");
-					
 					System.out.println("6 = generate report");
 					System.out.println("7 = sign up");
 
@@ -61,6 +76,7 @@ public class App {
 						InventoryOperations.addProduct();
 
 					} else if (userInput == 2) {
+						
 						InventoryOperations.removeProduct();
 
 					} else if (userInput == 3) {
@@ -75,7 +91,7 @@ public class App {
 						System.out.println("Which report you would like to print out Press 1 for general; Press 2 for low stock");
 						userInput = scanner.nextInt();
 						if(userInput == 1) {
-						PrintingReports.printingGeneralReports("products.txt",  InventoryOperations.getProductList().values().toString());
+						PrintingReports.printingGeneralReports();
 						}
 						
 						if(userInput == 2) {

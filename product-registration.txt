@@ -1,0 +1,7 @@
+Product Registration 
+------------------
+Product SKU: 7030
+Product Name: pringles
+Price: 23.0
+Quantity: 54
+Product registered successfully!
