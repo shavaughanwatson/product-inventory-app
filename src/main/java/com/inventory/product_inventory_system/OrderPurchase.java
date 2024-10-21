@@ -17,7 +17,9 @@ public class OrderPurchase {
 		
      
 	public static void  purchaseProduct() throws NoProductsInInventoryException,  ProductNotFoundException {
-		
+		if( InventoryOperations.getProductList().size() == 0 ) {
+			throw new NoProductsInInventoryException("No Products have been found." + "\n" + "Please insert new Products");
+		}
 		do { 
 		//get access to product in inventory array
 		System.out.println("------------------" +"\n" + "Product Purchases" +"\n" + "------------------"  + "\n" + "Select the product ID to make a purchase");

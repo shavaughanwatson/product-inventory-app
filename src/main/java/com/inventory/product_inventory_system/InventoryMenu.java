@@ -8,11 +8,12 @@ public class InventoryMenu {
 	private static Scanner scanner;
 	
  public static void showInventoryMenu  (User user) {
-	     scanner = new Scanner(System.in);
+	  
 	 
 		do {
-		
-			
+		try { 
+			 
+			scanner = new Scanner(System.in);
 			System.out.println("Welcome to the Inventory Product Management System!");
 			if (InventoryOperations.getProductList().size() == 0) {
 				System.out.println( "------------------------------------------------------------------\n"+"No products have been imported yet\n" +  "------------------------------------------------------------------\n");
@@ -108,20 +109,32 @@ public class InventoryMenu {
 						try {
 							InventoryOperations.SearchSKU();
 						} catch (NoProductsInInventoryException|ProductNotFoundException e) {
-							// TODO Auto-generated catch block
+							
 							e.printStackTrace();
 						}
 								
 					
 					} else if (userInput == 0) {
 						
-						user.setisLoggedIn(false);
+						
+						Authenitcation.Logout(user); //??
 						
 						
 					} else {
 						System.out.println("Invalid choose another option");
 					}
-					
+			
+			
+			
+		} catch (InputMismatchException e) {
+			System.out.println("You must enter whole numbers only. No decimals, words, or other info. Try again."
+					+ "\n" + "Press any number to go back to the main menu" + "\n"
+					+ "Input below:\n" + "-------------------------------");
+			scanner.nextLine();
+			userInput = scanner.nextInt();
+			
+		}
+		
 					
 
 		} while (user.getIsLoggedIn() == true); 

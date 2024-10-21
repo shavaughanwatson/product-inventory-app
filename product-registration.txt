@@ -1,7 +1,7 @@
 Product Registration 
 ------------------
-Product SKU: 4027
+Product SKU: 8340
 Product Name: lays
-Price: 4.22
+Price: 12.33
 Quantity: 23
 Product registered successfully!

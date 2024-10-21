@@ -1,5 +1,6 @@
 package com.inventory.product_inventory_system;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -10,17 +11,17 @@ public class App {
 
 		Scanner scanner = new Scanner(System.in);
 
-		int option = -1;
+		int option = -1;// why???
 		
 
 		do {
 			System.out.println("Welcome to the Inventory System");
-			System.out.println("1. Login");
-			System.out.println("2. Sign Up");
+			System.out.println("1. Sign Up");
+			System.out.println("2. Login");
 			System.out.print("Choose an option: ");
 			// Get user input for the menu
 			if (scanner.hasNextInt()) {
-				option = scanner.nextInt();
+				option = scanner.nextInt(); // why??
 				scanner.nextLine(); // Consume newline
 				switch (option) {
 				case 1:
@@ -28,7 +29,17 @@ public class App {
 
 					break;
 				case 2:
-					Authenitcation.SignUp();
+					
+					
+					try {
+						Authenitcation.Login();
+					} catch (InvalidLoginException e) {
+						
+						e.printStackTrace();
+					}
+					
+				
+				
 
 					break;
 				default:
@@ -46,6 +57,8 @@ public class App {
 	}
 
 }
+
+
 
 /*
  * //Scanner and userInput should be class OR interface -- need more research on

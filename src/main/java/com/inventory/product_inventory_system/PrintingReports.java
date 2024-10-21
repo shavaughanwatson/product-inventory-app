@@ -13,6 +13,9 @@ public class PrintingReports { // might have to be an interface.
 	
 	public static void printingGeneralReports() throws NoProductsInInventoryException {
 		//make error custom exception if no product is in the array
+		if( InventoryOperations.getProductList().size() == 0 ) {
+			throw new NoProductsInInventoryException("No Products have been found." + "\n" + "Please insert new Products");
+		}
 		
 		try {
 				
@@ -31,7 +34,6 @@ public class PrintingReports { // might have to be an interface.
 	}
 	
 	public static void printingProductRegistered(Product product) {
-		//make error custom exception if no product is in the array
 		
 		try {
 			
@@ -51,6 +53,28 @@ public class PrintingReports { // might have to be an interface.
 		
 	}
 	
+	public static void printingUserRegistered(User user) {
+		
+		
+		try {
+			
+			String userRegistration = "User Information \n" + "------------------" + "\n"+ "Username: "+ user.getUserName() + "\n" + "Password: "+ user.getUserPassword() + "\n" + "------------------" + "\n" + "User has registered succesfully!" ;
+				
+			//repeated code - make into method or own class/interface
+			FileWriter myWriter = new FileWriter("user-registration.txt");
+			 myWriter.write(userRegistration); //make report more into a table with java string
+			  myWriter.close();
+		      System.out.println("Successfully wrote to the file.");
+		      
+		} catch (IOException e) {
+		
+			 System.out.println("An error occurred.");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	
 	
 	public static String printCurrentInventory () {
@@ -69,7 +93,9 @@ public class PrintingReports { // might have to be an interface.
 
 
 public static void printingLowStockReports() throws NoProductsInInventoryException {
-	//make error custom exception if no product is in the array
+	if( InventoryOperations.getProductList().size() == 0 ) {
+		throw new NoProductsInInventoryException("No Products have been found." + "\n" + "Please insert new Products");
+	}
 	
 	String table = String.format("%-10s %-15s %-10s %-10s %-10s %-10s\n", "ID", "Product Name", "Price", "Quantity", "Sold", "Revenue") +
             "------------------------------------------------------------------\n";
