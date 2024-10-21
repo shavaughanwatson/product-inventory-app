@@ -1,7 +1,7 @@
 Product Registration 
 ------------------
-Product SKU: 7030
-Product Name: pringles
-Price: 23.0
-Quantity: 54
+Product SKU: 4027
+Product Name: lays
+Price: 4.22
+Quantity: 23
 Product registered successfully!

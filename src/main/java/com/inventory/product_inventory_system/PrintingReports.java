@@ -11,7 +11,7 @@ public class PrintingReports { // might have to be an interface.
 	//make method to show user registered - txt file should make password be in hashcode.
 	
 	
-	public static void printingGeneralReports() {
+	public static void printingGeneralReports() throws NoProductsInInventoryException {
 		//make error custom exception if no product is in the array
 		
 		try {
@@ -68,7 +68,7 @@ public class PrintingReports { // might have to be an interface.
 
 
 
-public static void printingLowStockReports() {
+public static void printingLowStockReports() throws NoProductsInInventoryException {
 	//make error custom exception if no product is in the array
 	
 	String table = String.format("%-10s %-15s %-10s %-10s %-10s %-10s\n", "ID", "Product Name", "Price", "Quantity", "Sold", "Revenue") +

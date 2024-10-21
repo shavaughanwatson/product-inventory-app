@@ -16,7 +16,7 @@ public class OrderPurchase {
      
 		
      
-	public static void  purchaseProduct() {
+	public static void  purchaseProduct() throws NoProductsInInventoryException,  ProductNotFoundException {
 		
 		do { 
 		//get access to product in inventory array
