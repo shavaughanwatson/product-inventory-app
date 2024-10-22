@@ -1,5 +1,8 @@
 package com.inventory.product_inventory_system;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 public class Product {
 	private String name;
 	private int quantity;
@@ -7,18 +10,22 @@ public class Product {
 	private int sku;
 	private int sold;
 	private double revenue;
+	private LocalDate date;
+	private String category;
 	
 	
 	
-	public Product(String name, int quantity, double price ) {
+	public Product(String name, int quantity, double price, String category, LocalDate date ) {
 		//need id property
 		
 		this.name = name;
 		this.quantity = quantity;
-		this.setPrice(price);
+		this.price = price;
+		this.category = category;
 		this.sku = (int) (Math.random() * 10000);
 		this.sold = 0;
 		this.revenue = sold * price;
+		this.date = date;
 	}
 	
 
@@ -75,6 +82,26 @@ public class Product {
 
 	public void setRevenue(double revenue) {
 		this.revenue = revenue;
+	}
+
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+
+	public String getCategory() {
+		return category;
+	}
+
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 

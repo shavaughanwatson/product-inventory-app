@@ -37,7 +37,7 @@ public class PrintingReports { // might have to be an interface.
 		
 		try {
 			
-			String productRegistration = "Product Registration \n" + "------------------" + "\n"+ "Product SKU: "+ product.getSKU() + "\n" + "Product Name: "+ product.getName() + "\n" + "Price: " + product.getPrice() + "\n" + "Quantity: " + product.getQuantity() +"\n" + "Product registered successfully!";
+			String productRegistration = "Product Registration \n" + "------------------" + "\n"+ "Product SKU: "+ product.getSKU() + "\n" + "Product Name: "+ product.getName() + "\n" + "Price: " + product.getPrice() + "\n" + "Quantity: " + product.getQuantity() +"\n" + "Category: " + product.getCategory() + "\n" + product.getDate() + "\n" + "Product registered successfully!";
 				
 			//repeated code - make into method or own class/interface
 			FileWriter myWriter = new FileWriter("product-registration.txt");
@@ -78,12 +78,12 @@ public class PrintingReports { // might have to be an interface.
 	
 	
 	public static String printCurrentInventory () {
-		String table = String.format("%-10s %-15s %-10s %-10s %-10s %-10s\n", "ID", "Product Name", "Price", "Quantity", "Sold", "Revenue") +
-                "------------------------------------------------------------------\n";
+		String table = String.format("%-10s %-15s %-10s %-15s %-10s %-15s %-10s %-10s\n", "ID", "Product Name", "Price", "Category", "Quantity", "Exp.Date", "Sold", "Revenue") +
+                "-----------------------------------------------------------------------------------------------------\n";
 		
 		for (Map.Entry<Integer, Product> entry: InventoryOperations.getProductList().entrySet()) {
 			
-			table += String.format("%-10s %-15s %-10s %-10s %-10s %-10s\n", entry.getValue().getSKU(), entry.getValue().getName(), entry.getValue().getPrice(), entry.getValue().getQuantity(),entry.getValue().getSold(),entry.getValue().getRevenue());
+			table += String.format("%-10s %-15s %-10s %-15s %-10s %-15s %-10s %-10s\n", entry.getValue().getSKU(), entry.getValue().getName(), entry.getValue().getPrice(), entry.getValue().getCategory(), entry.getValue().getQuantity(), entry.getValue().getDate(), entry.getValue().getSold(),entry.getValue().getRevenue());
 			
 		}
 		
@@ -97,14 +97,14 @@ public static void printingLowStockReports() throws NoProductsInInventoryExcepti
 		throw new NoProductsInInventoryException("No Products have been found." + "\n" + "Please insert new Products");
 	}
 	
-	String table = String.format("%-10s %-15s %-10s %-10s %-10s %-10s\n", "ID", "Product Name", "Price", "Quantity", "Sold", "Revenue") +
-            "------------------------------------------------------------------\n";
+	String table = String.format("%-10s %-15s %-10s %-15s %-10s %-15s %-10s %-10\n", "ID", "Product Name", "Price", "Quantity", "Category", "Exp. Date", "Sold", "Revenue") +
+            "-----------------------------------------------------------------------------------------------------------\n";
 	
 	for (Map.Entry<Integer, Product> entry: InventoryOperations.getProductList().entrySet()) {
 		
 		if(entry.getValue().getQuantity() < 3 ) {
 		
-		table += String.format("%-10s %-15s %-10s %-10s %-10s %-10s\n", "001", entry.getValue().getName(), entry.getValue().getPrice(), entry.getValue().getQuantity(),entry.getValue().getSold(),entry.getValue().getRevenue());
+		table += String.format("%-10s %-15s %-10s %-15s %-10s %-15s %-10 %-10s\n", entry.getValue().getSKU(), entry.getValue().getName(), entry.getValue().getPrice(), entry.getValue().getQuantity(), entry.getValue().getDate(), entry.getValue().getSold(),entry.getValue().getRevenue());
 		}
 	}
 		

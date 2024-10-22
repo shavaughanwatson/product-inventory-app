@@ -1,5 +1,9 @@
 package com.inventory.product_inventory_system;
 
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.LinkedHashMap;
@@ -18,6 +22,8 @@ public class InventoryOperations {
 	private static double inputPrice;
 	private static String inputQuery;
 	private static int userInput;
+	private static String dateInput;
+	private static int categoryInput;
 
 	public static void addProduct()  {
 
@@ -35,8 +41,32 @@ public class InventoryOperations {
 
 				System.out.println("Enter price");
 				inputPrice = scanner.nextDouble();
+				
+				
+				System.out.println("Enter Category: Press 0 for FOOD; Press 1 for MERCHANDISE");
+				categoryInput = scanner.nextInt();
+				
 
-				Product product = new Product(inputName, inputQuantity, inputPrice);
+				
+				String[] categories = {"FOOD" , "MERCHANDISE"}; 
+				
+				
+				String category = categories[categoryInput];
+				
+			
+				
+				
+				
+				
+				
+				System.out.println("Enter date in following format" + "\n" + "dd-MM-yyyy" );
+				scanner.nextLine();
+			    dateInput = scanner.nextLine();  
+			    
+			    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			    LocalDate expirationDate = LocalDate.parse(dateInput, formatter); 
+			    
+				Product product = new Product(inputName, inputQuantity, inputPrice, category, expirationDate);
 				
 				// RegisterProduct
 				PrintingReports.printingProductRegistered(product);
@@ -51,6 +81,12 @@ public class InventoryOperations {
 						+ "Input below:\n" + "-------------------------------");
 				scanner.nextLine();
 				userInput = scanner.nextInt();
+				
+			} catch (ArrayIndexOutOfBoundsException e)  {
+				
+				System.out.println("Invalid Option Please try again");
+			} catch (DateTimeParseException e) {
+				System.out.println("Invalid date format. Please use dd-MM-yyyy.");
 			}
 		} while (userInput == 1);
 
@@ -243,6 +279,44 @@ public class InventoryOperations {
 										.filter(entry -> entry.getValue().getName().contains(inputQuery)
 												|| entry.getValue().getName().contains(inputQuery))
 										.toList().toString());
+
+				System.out.println("Press one to select a another product or press another key to exit");
+				System.out.println("------------------" + "\n" + "Input below:");
+				userInput = scanner.nextInt();
+			} catch (InputMismatchException e) {
+				System.out.println("You must enter whole numbers only. No decimals, words, or other info. Try again."
+						+ "\n" + "Press 1 to product select a another product; or press another key to exit" + "\n"
+						+ "Input below:\n" + "-------------------------------");
+				scanner.nextLine();
+				userInput = scanner.nextInt();
+			}
+
+		} while (userInput == 1);
+
+	}
+	
+	public static void SearchByCategorieProducts() throws NoProductsInInventoryException {
+		// make error custom exception if no product is in the array
+		if( productList.size() == 0 ) {
+			throw new NoProductsInInventoryException("No Products have been found." + "\n" + "Please insert new Products");
+		}
+		do {
+
+			try {
+				System.out.println("Search for product category: Press 0 for FOOD; Press 1 for MERCHANDISE");
+				System.out.println("------------------" + "\n" + "Input Query below:");
+				System.out.println("Enter Category: ");
+				categoryInput = scanner.nextInt();
+				
+
+				String[] categories = {"FOOD" , "MERCHANDISE"}; 
+				
+				
+				String category = categories[categoryInput];
+				
+			
+				InventoryOperations.getProductList().entrySet().stream()
+										.filter(entry -> entry.getValue().getCategory().contains(category)).forEach(entry -> System.out.println(entry.getValue())); //turn this into a array;
 
 				System.out.println("Press one to select a another product or press another key to exit");
 				System.out.println("------------------" + "\n" + "Input below:");

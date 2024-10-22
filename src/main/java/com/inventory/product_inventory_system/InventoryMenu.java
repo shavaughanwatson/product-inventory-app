@@ -27,7 +27,12 @@ public class InventoryMenu {
 					System.out.println("4 = edit product");
 					System.out.println("5 = purchase products");
 					System.out.println("6 = generate report");
-					System.out.println("7 = sign up");
+					
+					//search functionality might to be interfaces
+					System.out.println("7 = search product by name");
+					System.out.println("8 = search product by SKU");
+					System.out.println("9 = search product by Category");
+					System.out.println("0 = Logout");
 
 					userInput = scanner.nextInt();
 					scanner.nextLine(); // Consume the newline character
@@ -112,6 +117,15 @@ public class InventoryMenu {
 							
 							e.printStackTrace();
 						}
+						
+					} else if (userInput == 9) {
+						try {
+							InventoryOperations.SearchByCategorieProducts();
+						} catch (NoProductsInInventoryException e) {
+							
+							e.printStackTrace();
+						}
+							
 								
 					
 					} else if (userInput == 0) {

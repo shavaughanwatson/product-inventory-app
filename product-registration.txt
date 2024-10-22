@@ -1,7 +1,9 @@
 Product Registration 
 ------------------
-Product SKU: 8340
-Product Name: lays
-Price: 12.33
+Product SKU: 6055
+Product Name: toy
+Price: 23.22
 Quantity: 23
+Category: MERCHANDISE
+2025-05-22
 Product registered successfully!
