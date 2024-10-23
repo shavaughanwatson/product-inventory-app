@@ -6,8 +6,8 @@ import java.util.Scanner;
 public class InventoryMenu {
 	private static int userInput;
 	private static Scanner scanner;
-	
- public static void showInventoryMenu  (User user) {
+
+	public static void showInventoryMenu  (User user) {
 	  
 	 
 		do {
@@ -72,34 +72,18 @@ public class InventoryMenu {
 							e.printStackTrace();
 						}
 						
+						
+						
 					} else if (userInput == 6) {
-						do {
-							try { 
-								System.out.println("Which report you would like to print out" + "\n" + "Press 1 for general report" +" Press 2 for low stock");
-								userInput = scanner.nextInt();
-								if(userInput == 1) {
+						
+						 
 								try {
 									PrintingReports.printingGeneralReports();
 								} catch (NoProductsInInventoryException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
-								}
-								
-								if(userInput == 2) {
-									try {
-										PrintingReports.printingLowStockReports();
-									} catch (NoProductsInInventoryException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-								}
-							} catch (InputMismatchException e) {
-								System.out.println("You must enter whole numbers only. No decimals, words, or other info. Try again."
-										+ "\n" + "Press 1 to product select a another product; or press another key to exit" + "\n"
-										+ "Input below:\n" + "-------------------------------");
-							}
-						} while (userInput == 6);
+			
 			
 						
 					} else if (userInput == 7) {
@@ -152,7 +136,10 @@ public class InventoryMenu {
 					
 
 		} while (user.getIsLoggedIn() == true); 
-		
-		
- }
+	  
+	    
+	}
+	
 }
+					
+

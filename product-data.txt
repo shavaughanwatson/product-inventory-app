@@ -1,2 +1,0 @@
-ID         Product Name    Price      Quantity   Sold       Revenue   
-------------------------------------------------------------------

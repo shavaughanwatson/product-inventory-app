@@ -1,6 +1,6 @@
 package com.inventory.product_inventory_system;
 
-import java.sql.Date;
+
 import java.time.LocalDate;
 
 public class Product {

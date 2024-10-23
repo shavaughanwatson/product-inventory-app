@@ -1,16 +1,11 @@
 package com.inventory.product_inventory_system;
 
-import java.io.FileWriter;   // Import the FileWriter class
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
-public class PrintingReports { // might have to be an interface.
-	
-	//make method to show product registeration
-	
-	//make method to show user registered - txt file should make password be in hashcode.
-	
-	
+public class PrintingReports {
+
 	public static void printingGeneralReports() throws NoProductsInInventoryException {
 		//make error custom exception if no product is in the array
 		if( InventoryOperations.getProductList().size() == 0 ) {
@@ -76,7 +71,6 @@ public class PrintingReports { // might have to be an interface.
 	
 	
 	
-	
 	public static String printCurrentInventory () {
 		String table = String.format("%-10s %-15s %-10s %-15s %-10s %-15s %-10s %-10s\n", "ID", "Product Name", "Price", "Category", "Quantity", "Exp.Date", "Sold", "Revenue") +
                 "-----------------------------------------------------------------------------------------------------\n";
@@ -89,41 +83,6 @@ public class PrintingReports { // might have to be an interface.
 		
 		return table;
 	}
-
-
-
-public static void printingLowStockReports() throws NoProductsInInventoryException {
-	if( InventoryOperations.getProductList().size() == 0 ) {
-		throw new NoProductsInInventoryException("No Products have been found." + "\n" + "Please insert new Products");
-	}
-	
-	String table = String.format("%-10s %-15s %-10s %-15s %-10s %-15s %-10s %-10\n", "ID", "Product Name", "Price", "Quantity", "Category", "Exp. Date", "Sold", "Revenue") +
-            "-----------------------------------------------------------------------------------------------------------\n";
-	
-	for (Map.Entry<Integer, Product> entry: InventoryOperations.getProductList().entrySet()) {
-		
-		if(entry.getValue().getQuantity() < 3 ) {
-		
-		table += String.format("%-10s %-15s %-10s %-15s %-10s %-15s %-10 %-10s\n", entry.getValue().getSKU(), entry.getValue().getName(), entry.getValue().getPrice(), entry.getValue().getQuantity(), entry.getValue().getDate(), entry.getValue().getSold(),entry.getValue().getRevenue());
-		}
-	}
-		
-	try {
-	
-		//repeated code - make into method or own class/interface
-		FileWriter myWriter = new FileWriter("low-stock-products.txt");
-		 myWriter.write(table);
-		 myWriter.close();
-	      System.out.println("Successfully wrote to the file.");
-	      
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		 System.out.println("An error occurred.");
-		e.printStackTrace();
-	}
-	
-}
-
 
 
 }

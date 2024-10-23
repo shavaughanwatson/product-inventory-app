@@ -24,7 +24,19 @@ public class InventoryOperations {
 	private static int userInput;
 	private static String dateInput;
 	private static int categoryInput;
-
+	
+	/*//IDEA FOR REFACTORING
+	public static void addProduct(String name, int quantity, double price, String category, LocalDate expirationDate) {
+	    Product product = new Product(name, quantity, price, category, expirationDate);
+	    
+	    // Register Product
+	    PrintingReports.printingProductRegistered(product);
+	    
+	    // Add to the product list
+	    getProductList().put(product.getSKU(), product);
+	}
+*/
+	
 	public static void addProduct()  {
 
 		do {
@@ -52,10 +64,6 @@ public class InventoryOperations {
 				
 				
 				String category = categories[categoryInput];
-				
-			
-				
-				
 				
 				
 				
@@ -92,6 +100,7 @@ public class InventoryOperations {
 
 	}
 
+	
 	public static void removeProduct() throws NoProductsInInventoryException, ProductNotFoundException {
 		if( productList.size() == 0 ) {
 			throw new NoProductsInInventoryException("No Products have been found." + "\n" + "Please insert new Products");
@@ -372,6 +381,10 @@ public class InventoryOperations {
 
 		} while (userInput == 1);
 
+	}
+	
+	public static void setProductList(Map<Integer, Product> productList) {
+		 InventoryOperations.productList = productList;
 	}
 
 }
