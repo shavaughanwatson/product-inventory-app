@@ -1,5 +1,10 @@
 package com.inventory.product_inventory_system;
 import org.junit.jupiter.api.Test;
+
+import com.inventory.product_inventory_system.authentication.Authenitcation;
+import com.inventory.product_inventory_system.model.User;
+import com.inventory.product_inventory_system.util.error_handling.InvalidLoginException;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

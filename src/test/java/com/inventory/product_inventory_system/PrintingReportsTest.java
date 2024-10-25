@@ -2,6 +2,12 @@ package com.inventory.product_inventory_system;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
+import com.inventory.product_inventory_system.model.Product;
+import com.inventory.product_inventory_system.model.User;
+import com.inventory.product_inventory_system.service.InventoryOperations;
+import com.inventory.product_inventory_system.service.PrintingReports;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;

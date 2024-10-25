@@ -1,0 +1,9 @@
+Product Registration 
+------------------
+Product SKU: 1923
+Product Name: lays
+Price: 23.44
+Quantity: 23
+Category: FOOD
+2030-12-11
+Product registered successfully!

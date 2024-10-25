@@ -16,6 +16,11 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.inventory.product_inventory_system.model.Product;
+import com.inventory.product_inventory_system.service.InventoryOperations;
+import com.inventory.product_inventory_system.util.error_handling.NoProductsInInventoryException;
+import com.inventory.product_inventory_system.util.error_handling.ProductNotFoundException;
+
 public class InventoryOperationsTest {
 
 
