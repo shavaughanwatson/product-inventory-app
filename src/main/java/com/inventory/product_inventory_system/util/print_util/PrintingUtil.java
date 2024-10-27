@@ -92,8 +92,8 @@ public class PrintingUtil {
 				+ "Product update: \n" + ListUtil.getProductList().get(selectedProduct).getSKU() + "\n"
 				+ ListUtil.getProductList().get(selectedProduct).getName() + "\n"
 				+ ListUtil.getProductList().get(selectedProduct).getPrice() + "\n"
-				+ ListUtil.getProductList().get(selectedProduct).getQuantity() 
-				);
+				+ ListUtil.getProductList().get(selectedProduct).getQuantity() + "\n" +
+				printCurrentInventory());
 		
 	}
 	

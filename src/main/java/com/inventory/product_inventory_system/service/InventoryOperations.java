@@ -20,7 +20,7 @@ import com.inventory.product_inventory_system.util.inventory_menu.SearchMenu;
 import com.inventory.product_inventory_system.util.print_util.PrintingUtil;
 import com.inventory.product_inventory_system.util.stock_management.ListUtil;
 
-public class InventoryOperations implements SearchOperations {
+public class InventoryOperations {
 	private static int userInput; // ***
 
 	public static void addNewProduct() {
@@ -28,12 +28,16 @@ public class InventoryOperations implements SearchOperations {
 		do {
 			try {
 				// 1. Input Product attributes ***
-
-				String productName = InputUtil.getUserInput("Enter product name: ", String.class);
-
-				int productQuanity = InputUtil.getUserInput("Enter quantity name: ", Integer.class);
+				
+				System.out.println("Enter product name: ");
+				String productName = InputUtil.scanner.nextLine();
+				
+				System.out.println("Enter quantity: ");
+				int productQuanity = InputUtil.scanner.nextInt();
 				InputUtil.scanner.nextLine();
-				double productPrice = InputUtil.getUserInput("Enter price name: ", Double.class);
+				
+				System.out.println("Enter price: ");
+				double productPrice = InputUtil.scanner.nextDouble();
 				InputUtil.scanner.nextLine();
 				String productCategory = InputUtil
 						.getCategoryInput("Enter Category: Press 0 for FOOD; Press 1 for MERCHANDISE");

@@ -1,7 +1,7 @@
 Product Registration 
 ------------------
-Product SKU: 5157
-Product Name: Dell Laptop
+Product SKU: 4391
+Product Name: Laptop
 Price: 999.99
 Quantity: 10
 Category: MERCHANDISE

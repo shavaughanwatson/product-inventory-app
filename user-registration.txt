@@ -1,0 +1,6 @@
+User Information 
+------------------
+Username: shav23
+Password: shav123
+------------------
+User has registered succesfully!

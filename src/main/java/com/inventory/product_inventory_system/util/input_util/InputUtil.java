@@ -2,9 +2,11 @@ package com.inventory.product_inventory_system.util.input_util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.inventory.product_inventory_system.model.Product;
+import com.inventory.product_inventory_system.util.error_handling.InvalidProductQuantity;
 import com.inventory.product_inventory_system.util.error_handling.ProductNotFoundException;
 import com.inventory.product_inventory_system.util.print_util.PrintingUtil;
 import com.inventory.product_inventory_system.util.stock_management.ListUtil;
@@ -17,16 +19,28 @@ public class InputUtil {
 	private static int userInput;
 
 	public static <T> T getUserInput(String prompt, Class<T> type) {
-		System.out.print(prompt);
+	    System.out.print(prompt);
 
-		if (type == Integer.class) {
-			return type.cast(scanner.nextInt());
-		} else if (type == String.class) {
-			return type.cast(scanner.nextLine());
-		} else if (type == Double.class) {
-			return type.cast(scanner.nextDouble());
-		}
-		return null;
+	    if (type == Integer.class) {
+	        if (scanner.hasNextInt()) {
+	            return type.cast(scanner.nextInt());
+	        } else {
+	            throw new NoSuchElementException("Expected an integer input but none was found.");
+	        }
+	    } else if (type == String.class) {
+	        if (scanner.hasNextLine()) {
+	            return type.cast(scanner.nextLine());
+	        } else {
+	            throw new NoSuchElementException("Expected a string input but none was found.");
+	        }
+	    } else if (type == Double.class) {
+	        if (scanner.hasNextDouble()) {
+	            return type.cast(scanner.nextDouble());
+	        } else {
+	            throw new NoSuchElementException("Expected a double input but none was found.");
+	        }
+	    }
+	    return null;
 	}
 
 	// Interfaces
@@ -57,10 +71,9 @@ public class InputUtil {
 	}
 
 	public static int selectedProductSKU() throws ProductNotFoundException {
-		int selectedSKU = InputUtil.getUserInput(
-				PrintingUtil.printCurrentInventory() + "\nSelect Product SKU: \nInput Product ID below:",
-				Integer.class);
-
+		
+		System.out.println(PrintingUtil.printCurrentInventory() + "\nSelect Product SKU: \nInput Product ID below:");		
+		int selectedSKU = scanner.nextInt();
 		if (!ListUtil.getProductList().containsKey(selectedSKU)) {
 			throw new ProductNotFoundException("No Products found in inventory");
 		}
@@ -71,7 +84,6 @@ public class InputUtil {
 
 		PrintingUtil.displayProductMenuOptions(selectedProduct);
 		userInput = InputUtil.scanner.nextInt();
-
 		while (userInput == 2) {
 			int addedQuantityInput;
 			addedQuantityInput = InputUtil.getUserInput("How much would you like to add?", Integer.class);
@@ -117,7 +129,7 @@ public class InputUtil {
 
 	
 
-	public static void inputPurchasedProduct(Product product) {
+	public static void inputPurchasedProduct(Product product)  throws InvalidProductQuantity {
 		System.out.println("Product Details" + "\n" + "------------------" + "\n" + "Product Name: " + product.getName()
 				+ "\n" + "Price: " + product.getPrice() + "\n" + "Available Quantity: " + product.getQuantity());
 		System.out.println("How many items you would like to purchase ?" + "\n" + "------------------" + "\n"
@@ -127,7 +139,7 @@ public class InputUtil {
 		userInput = scanner.nextInt(); // make error exception with input
 
 		if (userInput > product.getQuantity()) {
-			System.out.println("Quanity is invalid "); // error exception needs to be made
+			throw new InvalidProductQuantity("Quanity is invalid "); // error exception needs to be made
 		}
 		
 			product.setQuantity(product.getQuantity() - userInput);
