@@ -1,8 +1,5 @@
 package com.inventory.product_inventory_system.service;
 
-
-
-
 import com.inventory.product_inventory_system.util.error_handling.NoProductsInInventoryException;
 import com.inventory.product_inventory_system.util.file_writer_util.FileWriterUtil;
 import com.inventory.product_inventory_system.util.print_util.PrintingUtil;
@@ -21,9 +18,5 @@ public class PrintingReports {
 		FileWriterUtil.fileWrite("product-data.txt", PrintingUtil.printCurrentInventory());
 
 	}
-
-	
-	
-
 
 }

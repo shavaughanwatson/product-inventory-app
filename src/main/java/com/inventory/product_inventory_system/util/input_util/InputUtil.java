@@ -19,28 +19,28 @@ public class InputUtil {
 	private static int userInput;
 
 	public static <T> T getUserInput(String prompt, Class<T> type) {
-	    System.out.print(prompt);
+		System.out.print(prompt);
 
-	    if (type == Integer.class) {
-	        if (scanner.hasNextInt()) {
-	            return type.cast(scanner.nextInt());
-	        } else {
-	            throw new NoSuchElementException("Expected an integer input but none was found.");
-	        }
-	    } else if (type == String.class) {
-	        if (scanner.hasNextLine()) {
-	            return type.cast(scanner.nextLine());
-	        } else {
-	            throw new NoSuchElementException("Expected a string input but none was found.");
-	        }
-	    } else if (type == Double.class) {
-	        if (scanner.hasNextDouble()) {
-	            return type.cast(scanner.nextDouble());
-	        } else {
-	            throw new NoSuchElementException("Expected a double input but none was found.");
-	        }
-	    }
-	    return null;
+		if (type == Integer.class) {
+			if (scanner.hasNextInt()) {
+				return type.cast(scanner.nextInt());
+			} else {
+				throw new NoSuchElementException("Expected an integer input but none was found.");
+			}
+		} else if (type == String.class) {
+			if (scanner.hasNextLine()) {
+				return type.cast(scanner.nextLine());
+			} else {
+				throw new NoSuchElementException("Expected a string input but none was found.");
+			}
+		} else if (type == Double.class) {
+			if (scanner.hasNextDouble()) {
+				return type.cast(scanner.nextDouble());
+			} else {
+				throw new NoSuchElementException("Expected a double input but none was found.");
+			}
+		}
+		return null;
 	}
 
 	// Interfaces
@@ -71,9 +71,10 @@ public class InputUtil {
 	}
 
 	public static int selectedProductSKU() throws ProductNotFoundException {
-		
-		System.out.println(PrintingUtil.printCurrentInventory() + "\nSelect Product SKU: \nInput Product ID below:");		
+
+		System.out.println(PrintingUtil.printCurrentInventory() + "\nSelect Product SKU: \nInput Product ID below:");
 		int selectedSKU = scanner.nextInt();
+	
 		if (!ListUtil.getProductList().containsKey(selectedSKU)) {
 			throw new ProductNotFoundException("No Products found in inventory");
 		}
@@ -94,42 +95,35 @@ public class InputUtil {
 			PrintingUtil.displayExitOptions();
 			userInput = InputUtil.scanner.nextInt();
 		}
-		
 
 	}
 
 	public static void inputNewProductInfo(int selectedProductSKU) {
-	
+		
 		String inputName;
 		double inputPrice;
 		PrintingUtil.displayProductMenuOptions(selectedProductSKU);
 		
+		scanner.nextLine();
+		System.out.println(ListUtil.getProductList().get(selectedProductSKU));
+		System.out.println("Edit Product Name");
+		System.out.println("------------------" + "\n" + "Input Product Name below:");
+		inputName = scanner.nextLine();
 		
-				System.out.println(ListUtil.getProductList().get(selectedProductSKU));
-				System.out.println("Edit Product Name");
-				System.out.println("------------------" + "\n" + "Input Product Name below:");
-				inputName = InputUtil.scanner.nextLine();
-
-				ListUtil.getProductList().get(selectedProductSKU).setName(inputName); // get object value and can performed
-				// methods on it
-
-				System.out.println("Edit Product Price");
-				System.out.println("------------------" + "\n" + "Input Product Price below:");
-
-				inputPrice = InputUtil.scanner.nextDouble();
-				ListUtil.getProductList().get(selectedProductSKU).setPrice(inputPrice);
-
-				PrintingUtil.confirmNewProduct("Product Info has been updated!", selectedProductSKU);
-				
-				
-			
-	
+		ListUtil.getProductList().get(selectedProductSKU).setName(inputName); // get object value and can performed
+		// methods on it
 		
-		}
+		System.out.println("Edit Product Price");
+		System.out.println("------------------" + "\n" + "Input Product Price below:");
+		inputPrice = scanner.nextDouble();
+		scanner.nextLine();
+		ListUtil.getProductList().get(selectedProductSKU).setPrice(inputPrice);
 
-	
+		PrintingUtil.confirmNewProduct("Product Info has been updated!", selectedProductSKU);
 
-	public static void inputPurchasedProduct(Product product)  throws InvalidProductQuantity {
+	}
+
+	public static void inputPurchasedProduct(Product product) throws InvalidProductQuantity {
 		System.out.println("Product Details" + "\n" + "------------------" + "\n" + "Product Name: " + product.getName()
 				+ "\n" + "Price: " + product.getPrice() + "\n" + "Available Quantity: " + product.getQuantity());
 		System.out.println("How many items you would like to purchase ?" + "\n" + "------------------" + "\n"
@@ -141,23 +135,20 @@ public class InputUtil {
 		if (userInput > product.getQuantity()) {
 			throw new InvalidProductQuantity("Quanity is invalid "); // error exception needs to be made
 		}
-		
-			product.setQuantity(product.getQuantity() - userInput);
-			double purchasePrice = userInput * product.getPrice();
-			System.out.println(purchasePrice);
-			product.setSold(product.getSold() + userInput);
-			System.out.println(product.getPrice());
-			product.setRevenue(product.getRevenue() + purchasePrice);
-			System.out.println(product.getRevenue());
-			System.out.println("Purchase successful" + "\n" + "------------------" + "\n" + "Updated Inventory" + "\n"
-					+ "Product Name: " + product.getName() + "\n" + "Price: " + product.getPrice() + "\n"
-					+ "Available Quantity: " + product.getQuantity());
 
-			System.out.println("Press 1 to select a another product or press another key to exit");
-			userInput = scanner.nextInt();
-		}
+		product.setQuantity(product.getQuantity() - userInput);
+		double purchasePrice = userInput * product.getPrice();
+		System.out.println(purchasePrice);
+		product.setSold(product.getSold() + userInput);
+		System.out.println(product.getPrice());
+		product.setRevenue(product.getRevenue() + purchasePrice);
+		System.out.println(product.getRevenue());
+		System.out.println("Purchase successful" + "\n" + "------------------" + "\n" + "Updated Inventory" + "\n"
+				+ "Product Name: " + product.getName() + "\n" + "Price: " + product.getPrice() + "\n"
+				+ "Available Quantity: " + product.getQuantity());
 
-		
+		System.out.println("Press 1 to select a another product or press another key to exit");
+		userInput = scanner.nextInt();
 	}
 
-
+}

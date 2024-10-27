@@ -23,7 +23,7 @@ public class Authenitcation {
 
 		username = InputUtil.getUserInput("Enter username", String.class);
 		password = InputUtil.getUserInput("Enter password", String.class);
-		
+
 		User user = new User(username, password); // create user object with inputs
 		System.out.println(user);
 		user.setisLoggedIn(true);
@@ -64,13 +64,11 @@ public class Authenitcation {
 			password = InputUtil.getUserInput("Enter password", String.class);
 
 			// text file is read looking for username and password
-
-			// Validate the input username and password
 			if (storedUsername.equals(username) && storedPassword.equals(password)) {
 				User user = new User(username, password);
 				user.setisLoggedIn(true);
 				System.out.println("Login successful!");
-				InventoryMenu.showInventoryMenu(user); // Proceed to inventory menu
+				InventoryMenu.showInventoryMenu(user); 
 
 			} else {
 				throw new InvalidLoginException("Invalid Username/Password");

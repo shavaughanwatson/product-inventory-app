@@ -156,11 +156,14 @@ public class InventoryOperations {
 					throw new ProductNotFoundException(
 							"No Products have been found." );
 				}
+				
+				InputUtil.inputNewProductInfo(selectedProductSKU);
 
 				System.out.println("Press one to select a another product or press another key to exit");
 				System.out.println("------------------" + "\n" + "Input below:");
-				InputUtil.scanner.nextLine();
+				
 				userInput = InputUtil.scanner.nextInt();
+				InputUtil.scanner.nextLine();
 			} catch (InputMismatchException e) {
 				PrintingUtil.displayInputError();
 

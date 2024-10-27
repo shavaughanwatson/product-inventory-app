@@ -1,4 +1,5 @@
 package com.inventory.product_inventory_system.app;
+
 import com.inventory.product_inventory_system.authentication.Authenitcation;
 import com.inventory.product_inventory_system.util.error_handling.InvalidLoginException;
 import com.inventory.product_inventory_system.util.input_util.InputUtil;
@@ -6,10 +7,7 @@ import com.inventory.product_inventory_system.util.input_util.InputUtil;
 public class App {
 	public static void main(String[] args) {
 
-	
-
 		int option = -1;// why???
-		
 
 		do {
 			System.out.println("Welcome to the Inventory System");
@@ -26,15 +24,14 @@ public class App {
 
 					break;
 				case 2:
-					
+
 					try {
 						Authenitcation.Login();
 					} catch (InvalidLoginException e) {
-						
+
 						e.printStackTrace();
 					}
-					
-				
+
 					break;
 				default:
 					System.out.println("Invalid option. Press any key to restart or press 0 to exit program");
@@ -51,7 +48,3 @@ public class App {
 	}
 
 }
-
-
-
-

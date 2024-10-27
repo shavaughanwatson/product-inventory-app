@@ -111,7 +111,7 @@ public class PrintingUtil {
 
 	public static void displayInputError() {//this should be in util package
 		System.out.println("You must enter whole numbers only. No decimals, words, or other info. Try again."
-				+ "\n" + "Press 1 to product select a another product; or press another key to exit" + "\n");
+				);
 		
 	}
 
