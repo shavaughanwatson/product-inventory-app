@@ -8,10 +8,12 @@ import com.inventory.product_inventory_system.model.Product;
 import com.inventory.product_inventory_system.service.InventoryOperations;
 import com.inventory.product_inventory_system.service.OrderPurchase;
 import com.inventory.product_inventory_system.util.error_handling.NoProductsInInventoryException;
+import com.inventory.product_inventory_system.util.stock_management.ListUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,11 +26,11 @@ public class OrderPurchaseTest {
     @BeforeEach
     public void setUp() {
         // Clear previous products for fresh tests
-        InventoryOperations.getProductList().clear();
+        ListUtil.getProductList().clear();
       
         Product product = new Product("Dell Laptop", 10, 999.99, "MERCHANDISE", LocalDate.of(2025, 12, 31));
         this.sku = product.getSKU();  // Store the SKU of the created product
-        InventoryOperations.getProductList().put(1, product);  // Use the SKU as the key
+        ListUtil.getProductList().put(1, product);  // Use the SKU as the key
     }
 
     @Test
@@ -42,7 +44,7 @@ public class OrderPurchaseTest {
         assertDoesNotThrow(() -> OrderPurchase.purchaseProduct());
 
         // Verify the product quantity and sold count have been updated
-        Product purchasedProduct = InventoryOperations.getProductList().get(sku);
+        Product purchasedProduct = ListUtil.getProductList().get(sku);
         assertEquals(7, purchasedProduct.getQuantity(), "The quantity should be updated to 7.");
         assertEquals(3, purchasedProduct.getSold(), "The sold quantity should be 3.");
     }
@@ -50,7 +52,7 @@ public class OrderPurchaseTest {
     @Test
     public void testPurchaseProduct_NoProductsInInventory() {
         // Clear the product list to simulate no products available
-        InventoryOperations.getProductList().clear();
+        ListUtil.getProductList().clear();
 
         assertThrows(NoProductsInInventoryException.class, () -> {
             OrderPurchase.purchaseProduct();
@@ -68,7 +70,7 @@ public class OrderPurchaseTest {
         assertDoesNotThrow(() -> OrderPurchase.purchaseProduct());
      
         // Verify that the quantity remains the same since the purchase is invalid
-        Product purchasedProduct = InventoryOperations.getProductList().get(sku);
+        Product purchasedProduct = ListUtil.getProductList().get(sku);
         assertEquals(10, purchasedProduct.getQuantity(), "The quantity should remain at 10 since purchase was invalid.");
         assertEquals(0, purchasedProduct.getSold(), "The sold quantity should still be 0.");
     }

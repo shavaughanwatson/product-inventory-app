@@ -7,6 +7,8 @@ import com.inventory.product_inventory_system.model.Product;
 import com.inventory.product_inventory_system.model.User;
 import com.inventory.product_inventory_system.service.InventoryOperations;
 import com.inventory.product_inventory_system.service.PrintingReports;
+import com.inventory.product_inventory_system.util.print_util.PrintingUtil;
+import com.inventory.product_inventory_system.util.stock_management.ListUtil;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,7 +25,7 @@ public class PrintingReportsTest {
     public void testPrintingGeneralReports() {
         // Assuming InventoryOperations has a method to add a product for testing
     	Product testProduct = new Product("Dell Laptop", 10, 999.99, "MERCHANDISE", LocalDate.of(2025, 12, 31));
-        InventoryOperations.getProductList().put(testProduct.getSKU(), testProduct);
+         ListUtil.getProductList().put(testProduct.getSKU(), testProduct);
         
         // This method should not throw an exception when products exist
         assertDoesNotThrow(() -> {
@@ -47,7 +49,7 @@ public class PrintingReportsTest {
         
         // This method should write to a file
         assertDoesNotThrow(() -> {
-            PrintingReports.printingProductRegistered(testProduct);
+            PrintingUtil.printingProductRegistered(testProduct);
         });
 
         // Check if the file was created and contains expected content
@@ -67,7 +69,7 @@ public class PrintingReportsTest {
         
         // This method should write to a file
         assertDoesNotThrow(() -> {
-            PrintingReports.printingUserRegistered(testUser);
+        	PrintingUtil.printingUserRegistered(testUser);
         });
 
         // Check if the file was created and contains expected content
@@ -85,9 +87,9 @@ public class PrintingReportsTest {
     public void testPrintCurrentInventory() {
         // Assuming InventoryOperations has a method to add a product for testing
     	Product testProduct = new Product("Dell Laptop", 10, 999.99, "MERCHANDISE", LocalDate.of(2025, 12, 31));
-        InventoryOperations.getProductList().put(testProduct.getSKU(), testProduct);
+    	ListUtil.getProductList().put(testProduct.getSKU(), testProduct);
 
-        String inventoryOutput = PrintingReports.printCurrentInventory();
+        String inventoryOutput = PrintingUtil.printCurrentInventory();
         assertNotNull(inventoryOutput);
         assertTrue(inventoryOutput.contains("Dell Laptop")); // Check for test product name in output
     }

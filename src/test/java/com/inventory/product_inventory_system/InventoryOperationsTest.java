@@ -20,6 +20,7 @@ import com.inventory.product_inventory_system.model.Product;
 import com.inventory.product_inventory_system.service.InventoryOperations;
 import com.inventory.product_inventory_system.util.error_handling.NoProductsInInventoryException;
 import com.inventory.product_inventory_system.util.error_handling.ProductNotFoundException;
+import com.inventory.product_inventory_system.util.stock_management.ListUtil;
 
 public class InventoryOperationsTest {
 
@@ -27,21 +28,21 @@ public class InventoryOperationsTest {
 	 	@BeforeEach
 	    public void setUp() {
 	        // Clear the product list before each test
-	        InventoryOperations.getProductList().clear();; // Directly clearing the productList
+	        ListUtil.getProductList().clear(); // Directly clearing the productList
 	    }
 
 	    @Test
-	    public void testAddProduct() {
+	    public void testAddNewProduct() {
 	        // Simulate user input
 	        String simulatedInput = "Dell Laptop\n10\n999.99\n1\n31-12-2025\n";
 	        ByteArrayInputStream in = new ByteArrayInputStream(simulatedInput.getBytes());
 	        System.setIn(in);
 
 	        // Call the method to add a product
-	        InventoryOperations.addProduct();
+	        InventoryOperations.addNewProduct();;
 
 	        // Verify the product was added
-	        Product addedProduct = InventoryOperations.getProductList().values().iterator().next();
+	        Product addedProduct =  ListUtil.getProductList().values().iterator().next();
 
 	        assertNotNull(addedProduct, "Product should be added to the list");
 	        assertEquals("Dell Laptop", addedProduct.getName(), "Product name should match");
@@ -55,7 +56,7 @@ public class InventoryOperationsTest {
 	    public void testRemoveProduct() throws NoProductsInInventoryException, ProductNotFoundException {
 	        // Arrange: Add a product to the list first
 	        Product product = new Product("Dell Laptop", 10, 999.99, "MERCHANDISE", LocalDate.of(2025, 12, 31));
-	        InventoryOperations.getProductList().put(product.getSKU(), product);
+	        ListUtil.getProductList().put(product.getSKU(), product);
 	        
 	        // Simulate user input for removing the product (entering the SKU), followed by the input to exit the loop (not 1)
 	        String simulatedInput = product.getSKU() + "\n2\n";  // First input: SKU to remove, Second input: to exit the loop
@@ -63,10 +64,10 @@ public class InventoryOperationsTest {
 	        System.setIn(in);
 
 	        // Act: Call the removeProduct method
-	        InventoryOperations.removeProduct();
+	        InventoryOperations.removeProductFromList();
 
 	        // Assert: Check that the product is no longer in the product list
-	        assertFalse(InventoryOperations.getProductList().containsKey(product.getSKU()), 
+	        assertFalse(ListUtil.getProductList().containsKey(product.getSKU()), 
 	            "Product should be removed from the list.");
 	    }
 	    
@@ -81,7 +82,7 @@ public class InventoryOperationsTest {
 
 	        // Act & Assert: Verify that the correct exception is thrown
 	        Exception exception = assertThrows(NoProductsInInventoryException.class, () -> {
-	            InventoryOperations.removeProduct();
+	            InventoryOperations.removeProductFromList();
 	        });
 	        assertEquals("No Products have been found.\nPlease insert new Products", exception.getMessage());
 	    }
@@ -90,7 +91,7 @@ public class InventoryOperationsTest {
 	    public void testRemoveProductThrowsExceptionWhenProductNotFound() throws NoProductsInInventoryException {
 	        // Arrange: Add a product to the list
 	        Product product = new Product("Dell Laptop", 10, 999.99, "MERCHANDISE", LocalDate.of(2025, 12, 31));
-	        InventoryOperations.getProductList().put(product.getSKU(), product);
+	        ListUtil.getProductList().put(product.getSKU(), product);
 	        
 	        // Simulate input for a non-existing SKU
 	        String simulatedInput = "99999\n"; // SKU that doesn't exist
@@ -99,7 +100,7 @@ public class InventoryOperationsTest {
 
 	        // Act & Assert: Verify that the correct exception is thrown
 	        Exception exception = assertThrows(ProductNotFoundException.class, () -> {
-	            InventoryOperations.removeProduct();
+	            InventoryOperations.removeProductFromList();
 	        });
 	        assertEquals("No Products have been found in inventory", exception.getMessage());
 	    }
@@ -108,7 +109,7 @@ public class InventoryOperationsTest {
 	    public void testGetProduct_NoProductsInInventoryException() {
 	        // Test that NoProductsInInventoryException is thrown when productList is empty
 	        assertThrows(NoProductsInInventoryException.class, () -> {
-	            InventoryOperations.getProduct();
+	            InventoryOperations.viewProductDetails();
 	        });
 	    }
 
@@ -116,13 +117,13 @@ public class InventoryOperationsTest {
 	    public void testGetProduct_ProductNotFoundException() {
 	        // Add a product to the list to avoid NoProductsInInventoryException
 	        Product product = new Product("Dell Laptop", 10, 999.99, "MERCHANDISE", LocalDate.of(2025, 12, 31));
-	        InventoryOperations.getProductList().put(product.getSKU(), product);
+	        ListUtil.getProductList().put(product.getSKU(), product);
 
 	        // Simulate a scanner input for a nonexistent product ID
 	        assertThrows(ProductNotFoundException.class, () -> {
 	            // Assume user input is an invalid product ID (e.g., 2, which is not in the list)
 	            System.setIn(new java.io.ByteArrayInputStream("2\n".getBytes()));
-	            InventoryOperations.getProduct();
+	            InventoryOperations.viewProductDetails();
 	        });
 	    }
 
@@ -134,7 +135,7 @@ public class InventoryOperationsTest {
 	        // Add a product with a specific SKU
 	        Product product = new Product("Dell Laptop", 10, 999.99, "MERCHANDISE", LocalDate.of(2025, 12, 31));
 	        int productSKU = product.getSKU();  // Assuming SKU is an integer
-	        InventoryOperations.getProductList().put(productSKU, product);
+	        ListUtil.getProductList().put(productSKU, product);
 
 	        // Simulate user inputs for:
 	        // 1st input: SKU of the product (use productSKU)
@@ -146,11 +147,11 @@ public class InventoryOperationsTest {
 
 	        // Call the getProduct method (no exception should be thrown)
 	        assertDoesNotThrow(() -> {
-	            InventoryOperations.getProduct();
+	            InventoryOperations.viewProductDetails();
 	        });
 
 	        // Check if the product quantity was updated correctly (original was 10 + 3)
-	        assertEquals(13, InventoryOperations.getProductList().get(productSKU).getQuantity(), "The quantity should be updated to 13.");
+	        assertEquals(13, ListUtil.getProductList().get(productSKU).getQuantity(), "The quantity should be updated to 13.");
 	    }
 
 }

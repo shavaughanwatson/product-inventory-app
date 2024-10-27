@@ -1,9 +1,9 @@
 Product Registration 
 ------------------
-Product SKU: 1923
-Product Name: lays
-Price: 23.44
-Quantity: 23
-Category: FOOD
-2030-12-11
+Product SKU: 5157
+Product Name: Dell Laptop
+Price: 999.99
+Quantity: 10
+Category: MERCHANDISE
+2025-12-31
 Product registered successfully!
